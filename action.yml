@@ -5,9 +5,6 @@ inputs:
     description: 'Revision of NMS to use'
     required: true
     default: '1.15.2'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
 runs:
   using: 'docker'
   image: 'Dockerfile'
