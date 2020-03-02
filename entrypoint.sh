@@ -9,4 +9,4 @@ mkdir -p $HOME/.m2/repository
 echo "$HOME contains"
 ls -lah $HOME
 echo "Copying from /root/.m2/repository to $HOME/.m2/repository"
-cp -a /root/.m2/repository/. $HOME/.m2/repository
+cp -a /root/.m2/repository/. ./.m2/repository
