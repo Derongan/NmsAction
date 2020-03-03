@@ -1,6 +1,6 @@
 # NmsAction
 
-This action builds NMS and installs artifacts to $GITHUB_HOME/.m2.
+This action builds NMS and adds artifacts to `$WORKSPACE/nms-build`.
 
 
 # Usage
