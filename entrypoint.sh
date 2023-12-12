@@ -7,14 +7,9 @@ wget -O BuildTools.jar https://hub.spigotmc.org/jenkins/job/BuildTools/lastSucce
 version=$1
 
 # Older than 1.17 is java8
-# 1.17.1 is java16
 # Newer than 1.17.1 is java17
 case $version in
-  1.17.1)
-    echo "Using java16"
-    export JAVA_HOME=/usr/lib/jvm/java-16-openjdk
-    ;;
- 1.17* | 1.16* | 1.15* | 1.14* | 1.13* | 1.12* | 1.11* | 1.10* | 1.9* | 1.8*)
+ 1.17 | 1.16* | 1.15* | 1.14* | 1.13* | 1.12* | 1.11* | 1.10* | 1.9* | 1.8*)
     echo "Using java8"
     export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
     ;;
