@@ -1,34 +1,39 @@
 #!/bin/sh -l
-mkdir nms-build
-cd nms-build
 
-wget -O BuildTools.jar https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
+# Function to install dependencies
+install_dependencies() {
+    # Create directory for build
+    mkdir nms-build
+    cd nms-build
 
-version=$1
+    # Download BuildTools.jar
+    wget -O BuildTools.jar https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
 
-# Older than 1.17 is java8
-# Newer than 1.17.1 is java17
-case $version in
- 1.17 | 1.16* | 1.15* | 1.14* | 1.13* | 1.12* | 1.11* | 1.10* | 1.9* | 1.8*)
-    echo "Using java8"
-    export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
-    ;;
-  *)
-    echo "Using java17"
-    export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
-    ;;
-esac
+    version=$1
 
-# Set the JAVA_EXE variable
-JAVA_EXE=$JAVA_HOME/bin/java
+    # Determine Java version based on provided Minecraft version
+    if [[ $version == 1.17* || $version == 1.16* || $version == 1.15* || $version == 1.14* || $version == 1.13* || $version == 1.12* || $version == 1.11* || $version == 1.10* || $version == 1.9* || $version == 1.8* ]]; then
+        echo "Using java8"
+        export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
+    else
+        echo "Using java17"
+        export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
+    fi
 
-echo "Using java: $JAVA_HOME"
-echo "Using Java executable: $JAVA_EXE"
+    # Set the JAVA_EXE variable
+    JAVA_EXE=$JAVA_HOME/bin/java
 
-# Run BuildTools.jar with the specified version
-$JAVA_EXE -jar BuildTools.jar --rev $version
+    echo "Using java: $JAVA_HOME"
+    echo "Using Java executable: $JAVA_EXE"
 
-# Install to github .m2
-mkdir -p .m2/repository
-echo "Copying from /root/.m2/repository to $PWD/.m2/repository"
-cp -a /root/.m2/repository/. .m2/repository
+    # Run BuildTools.jar with the specified version
+    $JAVA_EXE -jar BuildTools.jar --rev $version
+
+    # Install to github .m2
+    mkdir -p .m2/repository
+    echo "Copying from /root/.m2/repository to $PWD/.m2/repository"
+    cp -a /root/.m2/repository/. .m2/repository
+}
+
+# Call the function with the version argument passed to the script
+install_dependencies $1
