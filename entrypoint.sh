@@ -46,7 +46,7 @@ build_one_nms() {
         return 1
     fi
 
-    cd ..
+    cd ../..
 }
 
 # Check if versions are provided as arguments
